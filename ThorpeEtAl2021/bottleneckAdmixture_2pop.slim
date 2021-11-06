@@ -1,0 +1,336 @@
+// bottleneck event followed by an admixture event
+// admixture = flow from pop1 (African) into pop2 (Asian)
+
+// only neutral and deleterious mutations (different type, each with a specific fixed effect)
+
+// for the migration, use takeMigrants() as we are in a nonWF model
+// thus the individual that are moved from pop1 to pop2 are removed from pop1
+
+initialize() {
+	initializeSLiMModelType("nonWF");
+	
+	// for the non admixture, will follow the true ancestry by using treeSeq recording
+	initializeTreeSeq();
+	
+	// if the neutral mutations are overlayed after the simulation
+	// will need to divide the mutation rate by 2
+	// and remove the neutral mutations from the genomic element 
+	// to take that into account
+	
+	defineConstant("K1", 10000);                      // carrying capacity -> pop size limit
+	defineConstant("L", 1600000);                      // chromosome length
+	// defineConstant("DELTA", 5000);			   // average length of the recombination tract
+	// defineConstant("MU",5e-7);
+	defineConstant("R",0);
+	defineConstant("Ni",2);	// initial population size
+	defineConstant("Nsample",100);	// sample pop size
+        
+    // defineConstant("nameFolder", "");
+    defineConstant("nameFolder", paste0(c(folder,"_",simu,"_",rep,"/")));
+	
+	defineConstant("typeRec", "HGT"); // HGT-like recombination: one recombination event per offspring; controlled by the mean tract length
+	//defineConstant("typeRec", "GC"); // gene conversion - like recombination
+	
+	// if multiple type of mutations
+	// the dominance coeff for the mutations should not matter as we consider a haploid individual
+	// remove the possibility of stacking
+	
+	// mutations for population 1
+	initializeMutationType("m1", 1, "f", 0.0);   // neutral (synonymous)
+	m1.mutationStackPolicy = "l";
+	m1.mutationStackGroup = 1;
+	
+	initializeMutationType("m2", 1, "f", -0.005);   // deleterious
+	m2.mutationStackPolicy = "l";
+	m2.mutationStackGroup = 1;
+	
+	initializeMutationType("m3", 1, "f", -0.002);   // deleterious
+	m3.mutationStackPolicy = "l";
+	m3.mutationStackGroup = 1;
+	
+	initializeMutationType("m4", 1, "f", -0.001);   // deleterious
+	m4.mutationStackPolicy = "l";
+	m4.mutationStackGroup = 1;
+	
+	initializeMutationType("m5", 1, "f", -0.0005);   // deleterious
+	m5.mutationStackPolicy = "l";
+	m5.mutationStackGroup = 1;
+	
+	initializeMutationType("m6", 1, "f", -0.0002);   // deleterious
+	m6.mutationStackPolicy = "l";
+	m6.mutationStackGroup = 1;
+	
+	initializeMutationType("m7", 1, "f", -0.0001);   // deleterious
+	m7.mutationStackPolicy = "l";
+	m7.mutationStackGroup = 1;
+
+
+    // mutations for population 2
+	initializeMutationType("m8", 1, "f", 0.0);   // neutral (synonymous)
+	m8.mutationStackPolicy = "l";
+	m8.mutationStackGroup = 1;
+	
+	initializeMutationType("m9", 1, "f", -0.005);   // deleterious
+	m9.mutationStackPolicy = "l";
+	m9.mutationStackGroup = 1;
+	
+	initializeMutationType("m10", 1, "f", -0.002);   // deleterious
+	m10.mutationStackPolicy = "l";
+	m10.mutationStackGroup = 1;
+	
+	initializeMutationType("m11", 1, "f", -0.001);   // deleterious
+	m11.mutationStackPolicy = "l";
+	m11.mutationStackGroup = 1;
+	
+	initializeMutationType("m12", 1, "f", -0.0005);   // deleterious
+	m12.mutationStackPolicy = "l";
+	m12.mutationStackGroup = 1;
+	
+	initializeMutationType("m13", 1, "f", -0.0002);   // deleterious
+	m13.mutationStackPolicy = "l";
+	m13.mutationStackGroup = 1;
+	
+	initializeMutationType("m14", 1, "f", -0.0001);   // deleterious
+	m14.mutationStackPolicy = "l";
+	m14.mutationStackGroup = 1;
+	
+	initializeGenomicElementType("g1", c(m1,m2,m3,m4,m5,m6,m7), c(6,1,1,1,1,1,1));
+	
+	initializeGenomicElement(g1, 0, L - 1);
+	initializeMutationRate(MU);
+	
+	initializeRecombinationRate(R);
+	if(typeRec == "GC") initializeGeneConversion(0, DELTA, 1);
+}
+
+mutation(NULL) {
+    mut.tag = 0;
+	return T;
+}
+
+// mutation callbacks
+// different types of mutations depending on the population (the selection coefficients are the same
+mutation(m1,p2) {
+    mut.setMutationType(m8);
+	return T;
+}
+mutation(m2,p2) {
+    mut.setMutationType(m9);
+	return T;
+}
+mutation(m3,p2) {
+    mut.setMutationType(m10);
+	return T;
+}
+mutation(m4,p2) {
+    mut.setMutationType(m11);
+	return T;
+}
+mutation(m5,p2) {
+    mut.setMutationType(m12);
+	return T;
+}
+mutation(m6,p2) {
+    mut.setMutationType(m13);
+	return T;
+}
+mutation(m7,p2) {
+    mut.setMutationType(m14);
+	return T;
+}
+
+// for the reproduction (bacteria), consider a circular chromosome)
+reproduction(NULL) {
+	nbOffspring = rpois(1, individual.tagF); // the number of offspring is drawn from a Poisson distribution whose mean is the fitness of the individual
+	for(i in seqLen(nbOffspring))
+	{
+		if(subpop.individualCount == 1 | DELTA == 0) {
+			subpop.addRecombinant(genome1, NULL, NULL, NULL, NULL, NULL);
+		}
+		else
+		{
+			recsource = subpop.sampleIndividuals(1, exclude = individual).genome1;
+			if(typeRec == "HGT") {
+				breaks = rdunif(1, max = L-1);
+				do lengthRec = asInteger(rexp(1, mu = DELTA));
+				while(lengthRec >= (L-1)); // do not have a recombination tract bigger than the chromosome
+				if(breaks+lengthRec <= L-1) breaks = c(breaks, breaks+lengthRec);
+				else breaks = c(0, lengthRec-(L-1-breaks), breaks, L-1); // suppose a circular chromosome and thus continue the recombined segment to the beginning
+			}
+			if(typeRec == "GC") breaks = sim.chromosome.drawBreakpoints();
+			subpop.addRecombinant(genome1, recsource, breaks, NULL, NULL, NULL);
+		}
+	}
+}
+
+
+1 early() {
+	
+    print(paste0(c("delta = ", DELTA)));
+
+	sim.addSubpop("p1", Ni);
+	
+	// explicitely remember the individuals of the initial population
+	// not necessary but can simplify things if use simplify during the analysis phase
+	//sim.treeSeqRememberIndividuals(sim.subpopulations.individuals);
+
+}
+
+// BOTTLENECK EVENT
+5000 early() {
+	sim.addSubpop("p2", 0); // add an empty subpop for the bottleneck
+	sim.setValue("K2", integerDiv(K1,10));
+	inds = p1.sampleIndividuals(sim.getValue("K2"), maxAge = 0);
+	inds.uniqueMutations.tag = sim.generation;
+	p2.takeMigrants(inds);
+
+}
+
+// end of the bottleneck
+// want to go back to the same pop size as p1
+5501 early() {
+	sim.setValue("K2", K1);
+}
+
+// MIGRATION EVENTS: from the African (pop1) to the Asian (pop2) population
+8000:15000 early() {
+	
+    if(sim.generation % 500 == 0) {
+	    // number of individuals, from each population, that will migrate into pop3
+	    M1 = 1;
+	    inds = p1.sampleIndividuals(M1, maxAge = 0);
+		inds.uniqueMutations.tag = sim.generation; //give to the mutation a tag of the generation when the mutation is introduced into p2
+	    p2.takeMigrants(inds);
+    }
+}
+
+
+early() { // do a loop on the subpop to avoid doing the same for everyone of them ?
+	
+	// if needed a scaling using the median of the fitness
+	// to avoid population extinction when there is an accumulation of deleterious mutations
+	
+	sim.recalculateFitness();
+	
+	for(subpop in sim.subpopulations) { // loop on the different subpopulations present in the simulations
+		inds = subpop.individuals;
+		inds[inds.age > 0].fitnessScaling = 0; // non overlapping generation -> get rid of the older individuals
+		inds = inds[inds.age == 0]; // keep only the juveniles -> will do the fitness scaling based on the median fitness and pop size on them
+		fit = subpop.cachedFitness(inds.index);
+		//med = fit[order(fit)];
+		//med = med[round(length(med)/2)];
+		
+		writeFile(paste0(c("./", nameFolder, "distribFit", subpop.id, ".txt")), paste(c(sim.generation, subpop.id, fit)), append=T);
+		
+		// the selection is done during the reproduction:
+		// the number of offspring will depend on the fitness of the individual
+		// thus, to be able to keep all of the individual for the reproduction,
+		// rescale the fitness by the the minimum fitness of the population (to have every fitness at least to 1 -> all ind will survive)
+		
+		// use the "true" rescaling for each individual's tag: dependant on the population and the median of the fitness distribution
+		// to correct for the population size and the fitness (in particular if value too low because of the accumulation of mutations)
+		
+		// the first rescaling, with the method fitnessScaling is applied only for the selection
+		// the tag is only used for the reproduction (give a rescaled fitness value to each individual
+		
+		// density-dependent population regulation -> regulate the pop size: 
+		// when the pop size < K -> fitnessScaling > 1 (no mortality will occur, the subpop size will grow); 
+		// if pop size > K -> fitnessScaling < 1 (mortality will bring it back towards K)
+		// this formula: exponential growth up to K and then stochastic pop size fluctuation around K
+		
+		subpop.fitnessScaling = 1/min(fit);
+		
+		if(subpop.id == 1) Ksubpop = K1;
+		if(subpop.id == 2) Ksubpop = sim.getValue("K2");
+		
+		inds.tagF = (Ksubpop / size(inds))* (1/mean(fit)) * fit; // the rescaled fitness is used as a tag for the reproduction -> mean nbr of offspring of the individual
+	}
+
+}
+
+
+late() {
+	
+	
+	for(subpop in sim.subpopulations) {
+		// do not remove the fixed mutations (frequency = 0.5) from the population
+		// still  need them to calculate the differences between the strains and the ancestor
+		// do it for each subpopulation separately
+		muts = sim.mutations;
+		freqs = sim.mutationFrequencies(subpop, muts);
+		if (any(freqs == 0.5))  {
+			writeFile(paste0(c("./", nameFolder, "IDfixed.txt")), paste(c(sim.generation,subpop.id,muts.id[freqs == 0.5])),append = T);
+			//subpop.genomes.removeMutations(muts[freqs == 0.5], T);
+			writeFile(paste0(c("./", nameFolder, "fixed.txt")), paste(c(sim.generation,subpop.id,muts.selectionCoeff[freqs == 0.5])),append = T);
+		}
+	}
+	
+	
+	sim.recalculateFitness();
+	
+	seqG = sapply(c(5000,seq(8000, 15000, by = 500)), "applyValue + seq(0, 100, by = 10);");
+	
+	for(subpop in sim.subpopulations) {
+		
+		fit = subpop.cachedFitness(NULL);
+		
+		N = subpop.individualCount;
+		
+		im = 1;
+		data1 = NULL;
+		data2 = NULL;
+		data3 = NULL;
+		data4 = NULL;
+		for(muts in sim.mutationTypes) {
+			mut = sim.mutationsOfType(muts);
+			nbMut = sim.mutationCounts(subpop, mut);
+			nbMutperStrains = subpop.individuals.countOfMutationsOfType(muts);
+			
+			// save the "histogram" instead of the value for each individual
+			// save count (nbr of mutations in one strain) and the nbr of ind with this nbr of mutations
+			writeFile(paste0(c("./", nameFolder, "distribMut", subpop.id, "_", im, ".txt")), paste(c(sim.generation, subpop.id, nbMutperStrains)), append=T);
+			
+			data1 = c(data1, size(nbMut[nbMut != 0 & nbMut != N])); // number of different segregating mutations
+			data2 = c(data2, sum(nbMut[nbMut != 0 & nbMut != N])); // total number of segregating mutations (take into account their count)
+			data3 = c(data3, size(nbMut[nbMut == N])); // number of fixed mutations
+			data4 = c(data4, sum(nbMut[nbMut != 0])); // total number of mutations (fixed + segregating)
+			im = im+1;
+		}
+		
+		writeFile(paste0(c("./", nameFolder, "out.csv")), paste(c(sim.generation, subpop.id, N, mean(fit), var(fit), data1, data2, data3, data4), sep = ","), append = T);
+		
+		if(sim.generation % 100 == 0 | sum(sim.generation == seqG) > 0) {
+			inds = sample(subpop.individuals, Nsample);
+			inds.genome1.output(paste(c("./", nameFolder, "genome", subpop.id, "_", sim.generation, ".txt"), sep = ""));
+		}
+	
+	}
+	
+    if(sum(sim.generation == seqG) > 0) {
+		mut = sim.mutations;
+		sim.outputMutations(mut, paste(c("./", nameFolder, "mutations_", sim.generation, ".txt"), sep = ""));
+		writeFile(paste0(c("./", nameFolder, "mutations_", sim.generation, ".txt")), "Tag:", append=T);
+	    writeFile(paste0(c("./", nameFolder, "mutations_", sim.generation, ".txt")), paste(sim.mutations.id), append=T);
+	    writeFile(paste0(c("./", nameFolder, "mutations_", sim.generation, ".txt")), paste(sim.mutations.tag), append=T);
+	}
+	
+	if(sim.generation % 100 == 0) print(sim.generation);
+}
+
+
+15000 late() {
+	
+	sim.treeSeqOutput(paste(c("./", nameFolder, "bottleneckAdmixed.trees"), sep = ""));
+    p1.individuals.genome1.output(paste(c("./", nameFolder, "fullGenome1_", sim.generation, ".txt"), sep = ""));
+    p2.individuals.genome1.output(paste(c("./", nameFolder, "fullGenome2_", sim.generation, ".txt"), sep = ""));
+	
+	sim.simulationFinished();
+
+}
+
+
+
+
+
+
+
