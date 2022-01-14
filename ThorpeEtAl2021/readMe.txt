@@ -2,6 +2,8 @@
 ###################################################################################################
 ## DESCRIPTION DATA
 ## AND HOW TO OBTAIN IT
+## note that the data given in example is not fit to directly use it in the scripts
+## it's just there to give an example of the format that is expected
 ###################################################################################################
 ###################################################################################################
 
