@@ -5,6 +5,10 @@ REQUIREMENTS;
 	python v3.9.6 (library sys, csv, random)
 	R v4.1.1 (packages ggplot2, cowplot, reshape2, gridExtra)
 
+run time: 
+	with the parameters used in the article (population size, mutation rate, number of generations), one simulation needed less than one day to be run
+	the analysis was done quasi immediately, except for the calculation of the pairwise differences (time dependent on the sample size)
+
 ###################################################################################################
 ###################################################################################################
 ## DESCRIPTION DATA
