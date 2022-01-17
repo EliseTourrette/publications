@@ -1,3 +1,10 @@
+REQUIREMENTS;
+-> simulations: 
+	slim v3.6 (https://messerlab.org/slim/)
+-> analysis and plotting: 
+	python v3.9.6 (library sys, csv, random)
+	R v4.1.1 (packages ggplot2, cowplot, reshape2, gridExtra)
+
 ###################################################################################################
 ###################################################################################################
 ## DESCRIPTION DATA
