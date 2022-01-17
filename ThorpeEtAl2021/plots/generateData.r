@@ -72,7 +72,7 @@ for(i in c(1,3,4)) {
 setwd("/Users/elise/Desktop/todaysWork")
 library(ggplot2)
 
-n0 <- 429936
+n0 <- 429936 ## twice the number of mutated sites (the tag file is separated in two: the first n0/2 lines represent the mutation id and the last n0/2 lines represent the generateion of migration from pop1 to pop2 for the mutation)
 data <- read.table("tag2_8000.txt")
 data0 <- data.frame(id = data$V1[1:(n0/2)], tag = data$V1[(n0/2+1):n0])
 id0 <- data0$id[data0$tag == 8000]
