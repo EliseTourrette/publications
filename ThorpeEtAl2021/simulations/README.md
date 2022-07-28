@@ -101,3 +101,5 @@ generateData.r
 PLOT.r
 # and, for the fig4E
 plotFig4E.r
+
+## added the additional scripts for the ancestry proportion as a function of the generations in the folder reviews
