@@ -10,11 +10,16 @@ use these positions to check which CDS are actually in the core genome
 and use these core CDS for the divergent dataset (calculate dN and dS)
 and to calculate LN and LS
 
-data needed
+DATA
 whole ref seq
 core ref seq
 aligned outgroup to the ref seq (whole seq)
 ref gff annotation file
+
+REQUIREMENTS
+GRAPES v1.1.1
+python v3.10.0
+R v4.1.1 (ggplot2 v3.3.5)
 
 
 the first step is to use mummer (nucmer) to align the core (reference) genome over the whole reference genome in order to get the coordinates of the sites that are part of the core genome. <br />

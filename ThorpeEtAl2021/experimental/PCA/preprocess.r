@@ -1,3 +1,6 @@
+## R version 4.1.1
+## vcfR version 1.13.0
+
 ## extract the CDS from the core genome
 ## using the core genome in vcf format (obtained from snippy)
 ## and the annotation in gff format

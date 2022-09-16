@@ -1,3 +1,6 @@
+## R version 4.1.1
+## ggplot2 version 3.3.5
+
 library(ggplot2)
 
 

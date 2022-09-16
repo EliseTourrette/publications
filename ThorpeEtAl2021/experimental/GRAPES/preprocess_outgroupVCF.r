@@ -1,3 +1,5 @@
+## R version 4.1.1
+
 ## create the VCF file for the divergent dataset (ie add the polymorphic sites to the Hp core VCF file)
 vcf <- read.table("vcf/Hp_core.vcf", comment.char = '', skip = 3)
 outgroup <- read.table("outgroup_core_diff.txt", skip = 1, sep = " ")

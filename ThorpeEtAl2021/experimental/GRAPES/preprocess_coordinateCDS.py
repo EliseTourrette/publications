@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+## python version 3.10.0
+
 genome = []
 i = 0
 with open("alignment_core_ref/26695_core_aligned.aln", 'rt') as f:

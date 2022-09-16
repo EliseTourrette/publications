@@ -1,8 +1,8 @@
 The PCA analysis is done on CDS (biallelic SNPs) of the core genome (with an additional setp of LD pruning for the preprocessing of the data), aligned on 26695 reference genome
 
 REQUIREMENTS
-R 4.1.3 (use the library vcfR)  
-PLINK 1.90b6.21  
+R v4.1.3 (use the library vcfR v1.13.0)  
+PLINK v1.90b6.21  
 
 preprocessing steps done in R
 > preprocess.r

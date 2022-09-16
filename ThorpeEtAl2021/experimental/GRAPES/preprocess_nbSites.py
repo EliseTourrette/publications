@@ -1,3 +1,5 @@
+## python version 3.10.0
+
 ## read the alignment
 ## filter the CDS sequence 
 ## then go back to R

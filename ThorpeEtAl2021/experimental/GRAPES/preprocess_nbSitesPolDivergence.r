@@ -1,3 +1,5 @@
+## R version 4.1.1
+
 ## NBR SITES
 
 ## for the GRAPES input, we need the number of syn and non syn SITES

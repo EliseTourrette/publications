@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+## python version 3.10.0
 
 genome = []
 i = 0

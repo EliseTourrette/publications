@@ -1,6 +1,11 @@
 ## script to plots the results of the treemix analysis
 ## note that I used hpAfrica2 as an outgroup
 
+## R 4.1.1
+## RColorBrewer 1.1-2
+## R.utils 2.11.0
+## OptM
+
 
 library(RColorBrewer)
 library(R.utils)

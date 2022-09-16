@@ -1,3 +1,5 @@
+## R version 4.1.1
+## RColorBrewer 1.1-2
 
 #
 # functions for plotting a tree

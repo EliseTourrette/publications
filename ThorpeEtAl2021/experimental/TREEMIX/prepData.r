@@ -1,3 +1,5 @@
+## R version 4.1.1
+
 data <- read.table("core.noN.vcf.gz", comment.char = "", skip = 3)
 sampleName <- unlist(data[1,-(1:10)])
 

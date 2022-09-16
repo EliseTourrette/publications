@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+## python 2.7.18
+
 import sys, os, gzip
 
 if len(sys.argv) < 3:

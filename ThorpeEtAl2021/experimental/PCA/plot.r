@@ -1,3 +1,6 @@
+## R version 4.1.1
+## tidyverse version 1.3.1
+
 ## R script to plot the PCA results
 
 
