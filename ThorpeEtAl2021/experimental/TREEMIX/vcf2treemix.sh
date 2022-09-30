@@ -4,6 +4,8 @@
 # by Joana Meier
 # requires vcftools, plink and plink2treemix.py from Treemix package to be installed
 # takes as input the vcf file and the clust file
+# from https://speciationgenomics.github.io/Treemix/
+
 
 if [ $# -ne 2 ]
  then

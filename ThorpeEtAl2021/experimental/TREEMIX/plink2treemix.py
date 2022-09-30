@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 ## python 2.7.18
+## from https://speciationgenomics.github.io/Treemix/
+
 
 import sys, os, gzip
 

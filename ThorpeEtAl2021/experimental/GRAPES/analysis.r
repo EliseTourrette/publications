@@ -2,6 +2,7 @@
 ## ggplot2 version 3.3.5
 
 library(ggplot2)
+library(cowplot)
 
 
 folder <- "div_data"
@@ -21,6 +22,14 @@ for(i in 1:length(files)) {
 
 system("rm tmp.txt")
 
-ggplot(res, aes(x = zone, y = as.numeric(omegaNA), col = pop)) +
-  geom_point() 
+fileName <- paste0(folderPlots, "/omegaNA.jpeg")
+p <- ggplot(res, aes(x = zone, y = as.numeric(omegaNA), col = pop)) +
+    geom_point() +
+    scale_colour_manual(values = colorPopulation$col, breaks = colorPopulation$pop) +
+    xlab("region") +
+    ylab("omega_NA")
+p + theme_cowplot() + theme(text = element_text(size = 16),axis.text = element_text(size = 16),legend.justification = c(1, -0.1),legend.position = c(1, 0.4))
+ggsave(fileName, width = 8.5, height = 8.5, units = "in", dpi = 500, scale = 0.75)
+
+
 

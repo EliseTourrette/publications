@@ -3,6 +3,8 @@ tool into account the linkage via the treemix parameters (option k, with blocks 
 consider the whole core genome (coding and non coding sequence)  
 however, need the snps to be biallelic  
 
+The scripts plink2treemix.py, vcf2treemix, plotting_funcs.R have been downloaded from https://speciationgenomics.github.io/Treemix/
+
 
 REQUIREMENTS  
 Treemix v1.12  

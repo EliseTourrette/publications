@@ -8,6 +8,7 @@
 
 # setwd("/home/elise/Desktop/WORK/articleHP/simu10/simu10/analysesAncestry")
 library(ggplot2)
+library(cowplot)
 
 
 
@@ -57,6 +58,7 @@ proportionTot <- rbind(proportionTot, data.frame(rec = rec, G = G, proportion = 
 
 
 save(proportionTot, file = "proportion.RData")
+#load("proportionData.RData")
 
 
 ggplot(proportionTot[!(proportionTot$population %in% c("pre_split")),]) +
@@ -75,7 +77,17 @@ ggplot(proportionTot[!(proportionTot$population %in% c("pre_split","unknown")),]
 ggsave("proportion2.jpeg", width = 9*3, height = 9)
 
 
-
+#admixture <- seq(from = 8000, to = 15000, by = 500)
+#for(i in unique(proportionTot$rec)) {
+#   fileName <- paste0(folderPlots, "/proportion", i, ".jpeg")
+#    p <- ggplot(proportionTot[!(proportionTot$population %in% c("pre_split")) & (proportionTot$rec == i),]) +
+#        geom_point(aes(x = G, y = proportion, color = population)) +
+#        scale_color_manual(name = "ancestry", breaks = ancestryString, values = ancestryColor) +
+#        labs(x = "generation", y = "ancestry proportion") +
+#        geom_segment(data = data.frame(admixture = admixture), aes(x = admixture,y = -2.8,xend = admixture,yend = -0.5), arrow = arrow(length = unit(0.05, "in")))
+#    p + theme_cowplot() + theme(text = element_text(size = 16),axis.text = element_text(size = 21),legend.justification = c(1, -0.1),legend.position = c(1, 0.4))
+#    ggsave(fileName, width = 8.5, height = 8.5, units = "in", dpi = 500, scale = 0.75)
+#}
 
 
 

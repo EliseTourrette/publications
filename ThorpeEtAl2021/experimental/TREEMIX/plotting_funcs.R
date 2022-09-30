@@ -3,6 +3,7 @@
 
 #
 # functions for plotting a tree
+# from https://speciationgenomics.github.io/Treemix/
 #
 
 library(RColorBrewer)

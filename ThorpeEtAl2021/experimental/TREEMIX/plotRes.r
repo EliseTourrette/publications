@@ -35,6 +35,15 @@ res <- optM(folder = ".", tsv = "outOptM")
 plot_optM(res, pdf = "plotOptM")
 
 
+## plot with the optimum number of edges
+prefix="core.noN"
+edge <- 9
+rep <- 5
+
+pdf(paste0(folderPlots, "/results_", edge,".pdf"), width = 16, height = 9)
+plot_tree(cex=0.8,paste0(prefix,".",edge,".",rep))
+graphics.off()
+
 
 ## look at the results of the threepop command that calculate the f3 statistics
 ## between pop A;B,C
