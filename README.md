@@ -1,5 +1,5 @@
 # scriptPubli
-scripts associated with my different publications
+links to get the scripts associated with my different publications (in particular for the two in forgemia)
 
 
 Assessing by Modeling the Consequences of Increased Recombination in Recurrent Selection of Oryza sativa and Brassica rapa  
