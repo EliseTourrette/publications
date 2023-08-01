@@ -17,10 +17,10 @@ see https://sourcesup.renater.fr/frs/download.php/latestfile/2217/CAREB_12.tar.g
 Repeated out-of-Africa expansions of Helicobacter pylori driven by replacement of deleterious mutations  
 Harry A. Thorpe, Elise Tourrette, Koji Yahara, Filipa M. Vale, Siqi Liu, Mónica Oleastro, Teresa Alarcon, TsachiTsadok Perets, Saeid Latifi-Navid, Yoshio Yamaoka, Beatriz Martinez-Gonzalez, Ioannis Karayiannis, Timokratis Karamitros, Dionyssios N. Sgouras, Wael Elamin, Ben Pascoe, Samuel K. Sheppard, Jukka Ronkainen, Pertti Aro, Lars Engstrand, Lars Agreus, Sebastian Suerbaum, Kaisa Thorell, Daniel Falush   
 Nature Communications 13, 6842 (2022). https://doi.org/10.1038/s41467-022-34475-3
-public repository: Hpylori/HpEurope
+public repository: Hpylori/HpEurope -> https://github.com/EliseTourrette/Hpylori/tree/main/HpEurope
 
 
-Meat without vegetables: An ancient ecotype of Helicobacter pylori found in Indigenous populations and animal adapted lineages
+An ancient ecotype of Helicobacter pylori found in Indigenous populations and animal adapted lineages
 Elise Tourrette, Roberto C. Torres, Sarah L. Svensson, Takashi Matsumoto, Muhammad Miftahussurur, Kartika Afrida Fauzia, Ricky Indra Alfaray, Ratha-Korn Vilaichone, Vo Phuoc Tuan, HelicobacterGenomicsConsortium, Abbas Yadegar, Lisa Olsson, Zhemin Zhou, Yoshio Yamaoka, Kaisa Thorell, Daniel Falush
 bioRxiv 2023.04.28.538659; doi: https://doi.org/10.1101/2023.04.28.538659
 scripts to be put in the public repository Hpylori/HpEcotype
